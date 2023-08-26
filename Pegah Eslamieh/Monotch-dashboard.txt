@@ -1,0 +1,1298 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 3,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "P052245A3190431CB"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "scheme",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 3,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 15,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "P052245A3190431CB"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT time_bucket('$bucket_interval', time) as time, sum(kpi_alert_count)--,device_identifier\r\nFROM kpi_1d \r\nwhere device_identifier in ($device_identifier1) and kpi_type_code in ($kpi_type_code)  and org_identifier in ($org_identifier1)--and Device_identifier ='$Device_identifier' and time > '2022-12-15 01:00:00'\r\nGROUP BY time_bucket('$bucket_interval', time),device_identifier  --,org_identifier--,--,org_identifier--,--,\r\norder by time,device_identifier",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "sum kpi_alert_count based on time bucket",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "P052245A3190431CB"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "9.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "P052245A3190431CB"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT * FROM kpi_type ORDER BY code",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "kpi_1d"
+        }
+      ],
+      "title": "kpi_type",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "P052245A3190431CB"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "scheme",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 3,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "P052245A3190431CB"
+          },
+          "editorMode": "code",
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT time_bucket('$bucket_interval', time) as time, avg(kpi_value_avg) as average_kpi--,org_identifier --,\r\nFROM kpi_1d \r\nwhere  device_identifier in ($device_identifier1) and kpi_type_code in ($kpi_type_code)  and org_identifier in ($org_identifier1)--and Device_identifier ='$Device_identifier' and time > '2022-12-15 01:00:00'\r\nGROUP BY time_bucket('$bucket_interval', time)--,org_identifier--,--,org_identifier--,--,\r\norder by time\r\n\r\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "name": "AVG",
+                "parameters": [
+                  {
+                    "name": "kpi_value_avg",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "name": "\"time\"",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            }
+          },
+          "table": "kpi_1d"
+        }
+      ],
+      "title": "Avg of  kpi over all filters",
+      "transparent": true,
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "P052245A3190431CB"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 9
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "P052245A3190431CB"
+          },
+          "editorMode": "code",
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT time_bucket('$bucket_interval', time) as time, avg(kpi_value_avg),kpi_type_code-- ,device_identifier--,\r\nFROM kpi_1d \r\nwhere  kpi_type_code in ($kpi_type_code)  and device_identifier in ($device_identifier1) and org_identifier in ($org_identifier1)--and Device_identifier ='$Device_identifier' and time > '2022-12-15 01:00:00'\r\nGROUP BY time_bucket('$bucket_interval', time),kpi_type_code--,org_identifier--,device_identifier--,\r\norder by time\r\n\r\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "name": "AVG",
+                "parameters": [
+                  {
+                    "name": "kpi_value_avg",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "name": "\"time\"",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            }
+          },
+          "table": "kpi_1d"
+        }
+      ],
+      "title": "avg kpi type code",
+      "transparent": true,
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "P052245A3190431CB"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "scheme",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 3,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 0,
+        "y": 16
+      },
+      "id": 7,
+      "maxPerRow": 2,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.5.2",
+      "repeat": "device_identifier1",
+      "repeatDirection": "v",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "P052245A3190431CB"
+          },
+          "editorMode": "code",
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT time_bucket('$bucket_interval', time) as time, avg(kpi_value_avg)--,max(device_identifier) as devices_identifier --,org_identifier --,\r\nFROM kpi_1d \r\nwhere  device_identifier in ($device_identifier1)-- and kpi_type_code in ($kpi_type_code)  and org_identifier in ($org_identifier)--and Device_identifier ='$Device_identifier' and time > '2022-12-15 01:00:00'\r\nGROUP BY time_bucket('$bucket_interval', time),device_identifier--,org_identifier--,--,org_identifier--,--,\r\norder by time,device_identifier\r\n\r\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "name": "AVG",
+                "parameters": [
+                  {
+                    "name": "kpi_value_avg",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "name": "\"time\"",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            }
+          },
+          "table": "kpi_1d"
+        }
+      ],
+      "title": "Avg of  kpi for each device_identifier",
+      "transparent": true,
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "P052245A3190431CB"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 17
+      },
+      "id": 4,
+      "options": {
+        "displayMode": "lcd",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true,
+        "valueMode": "color"
+      },
+      "pluginVersion": "9.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "P052245A3190431CB"
+          },
+          "editorMode": "code",
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT time_bucket('$bucket_interval', time) as time, avg(kpi_value_avg),kpi_type_code-- ,device_identifier--,\r\nFROM kpi_1d \r\nwhere  kpi_type_code in ($kpi_type_code)  and device_identifier in ($device_identifier1) and org_identifier in ($org_identifier1)--and Device_identifier ='$Device_identifier' and time > '2022-12-15 01:00:00'\r\nGROUP BY time_bucket('$bucket_interval', time),kpi_type_code--,org_identifier--,device_identifier--,\r\norder by time\r\n\r\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "name": "AVG",
+                "parameters": [
+                  {
+                    "name": "kpi_value_avg",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "name": "\"time\"",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            }
+          },
+          "table": "kpi_1d"
+        }
+      ],
+      "title": "Avg kpi for each  type code",
+      "transparent": true,
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "P052245A3190431CB"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "series",
+            "axisGridShow": true,
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 25
+      },
+      "id": 11,
+      "options": {
+        "candleStyle": "ohlcbars",
+        "colorStrategy": "open-close",
+        "colors": {
+          "down": "red",
+          "up": "green"
+        },
+        "fields": {
+          "close": "last",
+          "high": "high",
+          "low": "low",
+          "volume": "volume"
+        },
+        "includeAllFields": false,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "mode": "candles+volume"
+      },
+      "pluginVersion": "9.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "P052245A3190431CB"
+          },
+          "editorMode": "code",
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT time_bucket('$bucket_interval', time) as time, min(kpi_value_min) as low, max(kpi_value_max) as high, avg(kpi_value_last) as last,avg(kpi_count) as volume\r\n--,lag(avg(kpi_value_last),1)  over (partition by time_bucket('$bucket_interval', time) order by time_bucket('$bucket_interval', time)) as first\r\nFROM kpi_1d \r\nwhere device_identifier in ($device_identifier1) and kpi_type_code in ($kpi_type_code)  and org_identifier in ($org_identifier1)\r\ngroup by time_bucket('$bucket_interval', time)--,device_identifier,kpi_type_code,org_identifier",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "kpi_value_min",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "kpi_value_max",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "kpi_value_last",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "kpi_1d"
+        }
+      ],
+      "title": "Candlestick(OHLC) for kpi",
+      "type": "candlestick"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "P052245A3190431CB"
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 24,
+        "x": 0,
+        "y": 33
+      },
+      "id": 3,
+      "options": {
+        "folderId": 0,
+        "maxItems": 10,
+        "query": "",
+        "showHeadings": false,
+        "showRecentlyViewed": false,
+        "showSearch": true,
+        "showStarred": false,
+        "tags": []
+      },
+      "pluginVersion": "9.5.2",
+      "title": "Dashboards",
+      "type": "dashlist"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": "",
+          "value": ""
+        },
+        "hide": 0,
+        "name": "Device_identifier",
+        "options": [
+          {
+            "selected": true,
+            "text": "4063363092",
+            "value": "4063363092"
+          }
+        ],
+        "query": "4063363092",
+        "skipUrlSync": false,
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "RA_CAM_QUALITY",
+            "RA_CLOCK_DIFF",
+            "RA_CONNECTED_PERCENTAGE",
+            "RA_EXCEPTIONAL_CONDITION_PERCENTAGE",
+            "RA_MAP_FREQUENCY",
+            "RA_MAP_QUALITY",
+            "RA_PREDICTION_CONFIDENCE_PERCENTAGE",
+            "RA_PREDICTION_LIKELY_DELTA",
+            "RA_PREDICTION_LIKELY_PERCENTAGE",
+            "RA_PREDICTION_WINDOW_PERCENTAGE",
+            "RA_PREDICTION_WINDOW_SIZE",
+            "RA_PRIORITY_ANSWERED_PERCENTAGE",
+            "RA_PRIORITY_GRANTED_ETA_DELTA_EMERGENCY",
+            "RA_PRIORITY_GRANTED_ETA_DELTA_OTHER",
+            "RA_PRIORITY_GRANTED_ETA_GREEN_DELTA_EMERGENCY",
+            "RA_PRIORITY_GRANTED_ETA_GREEN_DELTA_OTHER",
+            "RA_PRIORITY_GRANTED_PERCENTAGE_EMERGENCY",
+            "RA_PRIORITY_GRANTED_PERCENTAGE_OTHER",
+            "RA_ROUNDTRIP_LATENCY",
+            "RA_SAT_MISSING_DAYS",
+            "RA_SESSION_CREATIONS",
+            "RA_SPAT_FREQUENCY",
+            "RA_SPAT_QUALITY",
+            "RA_SRM_QUALITY",
+            "RA_SSM_QUALITY",
+            "RA_STATION_COUNT",
+            "RA_SUBJECT_STATE",
+            "RA_TLCCONF_QUALITY"
+          ],
+          "value": [
+            "RA_CAM_QUALITY",
+            "RA_CLOCK_DIFF",
+            "RA_CONNECTED_PERCENTAGE",
+            "RA_EXCEPTIONAL_CONDITION_PERCENTAGE",
+            "RA_MAP_FREQUENCY",
+            "RA_MAP_QUALITY",
+            "RA_PREDICTION_CONFIDENCE_PERCENTAGE",
+            "RA_PREDICTION_LIKELY_DELTA",
+            "RA_PREDICTION_LIKELY_PERCENTAGE",
+            "RA_PREDICTION_WINDOW_PERCENTAGE",
+            "RA_PREDICTION_WINDOW_SIZE",
+            "RA_PRIORITY_ANSWERED_PERCENTAGE",
+            "RA_PRIORITY_GRANTED_ETA_DELTA_EMERGENCY",
+            "RA_PRIORITY_GRANTED_ETA_DELTA_OTHER",
+            "RA_PRIORITY_GRANTED_ETA_GREEN_DELTA_EMERGENCY",
+            "RA_PRIORITY_GRANTED_ETA_GREEN_DELTA_OTHER",
+            "RA_PRIORITY_GRANTED_PERCENTAGE_EMERGENCY",
+            "RA_PRIORITY_GRANTED_PERCENTAGE_OTHER",
+            "RA_ROUNDTRIP_LATENCY",
+            "RA_SAT_MISSING_DAYS",
+            "RA_SESSION_CREATIONS",
+            "RA_SPAT_FREQUENCY",
+            "RA_SPAT_QUALITY",
+            "RA_SRM_QUALITY",
+            "RA_SSM_QUALITY",
+            "RA_STATION_COUNT",
+            "RA_SUBJECT_STATE",
+            "RA_TLCCONF_QUALITY"
+          ]
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "P052245A3190431CB"
+        },
+        "definition": "select distinct  kpi_type_code\nFROM\n  kpi_1d\norder by \n  kpi_type_code ASC",
+        "hide": 0,
+        "includeAll": true,
+        "label": "kpi_type_code",
+        "multi": true,
+        "name": "kpi_type_code",
+        "options": [],
+        "query": "select distinct  kpi_type_code\nFROM\n  kpi_1d\norder by \n  kpi_type_code ASC",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "93003",
+            "93027",
+            "93030",
+            "93033",
+            "93045",
+            "93048",
+            "93051",
+            "93054",
+            "93060",
+            "93159",
+            "93225",
+            "93231",
+            "93240",
+            "93261",
+            "93300",
+            "93312",
+            "93372",
+            "93393",
+            "93447",
+            "93453",
+            "93471",
+            "93540",
+            "93561",
+            "93567",
+            "93573",
+            "93585",
+            "93621",
+            "93624",
+            "93684",
+            "93693",
+            "93696",
+            "93753",
+            "93819",
+            "93834",
+            "93846",
+            "93861",
+            "93897",
+            "93951",
+            "93978",
+            "94002",
+            "94008",
+            "94041",
+            "94053",
+            "94107",
+            "94140",
+            "94155",
+            "94164",
+            "94167",
+            "94170",
+            "94176",
+            "94179",
+            "94182",
+            "94185",
+            "94188",
+            "94191",
+            "94194",
+            "94197",
+            "94200",
+            "94215",
+            "94221",
+            "94230",
+            "94236",
+            "94242",
+            "94245"
+          ],
+          "value": [
+            "93003",
+            "93027",
+            "93030",
+            "93033",
+            "93045",
+            "93048",
+            "93051",
+            "93054",
+            "93060",
+            "93159",
+            "93225",
+            "93231",
+            "93240",
+            "93261",
+            "93300",
+            "93312",
+            "93372",
+            "93393",
+            "93447",
+            "93453",
+            "93471",
+            "93540",
+            "93561",
+            "93567",
+            "93573",
+            "93585",
+            "93621",
+            "93624",
+            "93684",
+            "93693",
+            "93696",
+            "93753",
+            "93819",
+            "93834",
+            "93846",
+            "93861",
+            "93897",
+            "93951",
+            "93978",
+            "94002",
+            "94008",
+            "94041",
+            "94053",
+            "94107",
+            "94140",
+            "94155",
+            "94164",
+            "94167",
+            "94170",
+            "94176",
+            "94179",
+            "94182",
+            "94185",
+            "94188",
+            "94191",
+            "94194",
+            "94197",
+            "94200",
+            "94215",
+            "94221",
+            "94230",
+            "94236",
+            "94242",
+            "94245"
+          ]
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "P052245A3190431CB"
+        },
+        "definition": "select distinct  org_identifier\nFROM\n  kpi_1d\norder by \n  org_identifier ASC",
+        "hide": 0,
+        "includeAll": true,
+        "label": "org_identifier",
+        "multi": true,
+        "name": "org_identifier1",
+        "options": [],
+        "query": "select distinct  org_identifier\nFROM\n  kpi_1d\norder by \n  org_identifier ASC",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 3,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "4063363092"
+          ],
+          "value": [
+            "4063363092"
+          ]
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "P052245A3190431CB"
+        },
+        "definition": "select distinct device_identifier\nFROM\n  kpi_1d\nORDER BY device_identifier ASC",
+        "hide": 0,
+        "includeAll": true,
+        "label": "device_identifier",
+        "multi": true,
+        "name": "device_identifier1",
+        "options": [],
+        "query": "select distinct device_identifier\nFROM\n  kpi_1d\nORDER BY device_identifier ASC",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "auto": true,
+        "auto_count": 30,
+        "auto_min": "10s",
+        "current": {
+          "selected": false,
+          "text": "30d",
+          "value": "30d"
+        },
+        "hide": 0,
+        "label": "",
+        "name": "bucket_interval",
+        "options": [
+          {
+            "selected": false,
+            "text": "auto",
+            "value": "$__auto_interval_bucket_interval"
+          },
+          {
+            "selected": false,
+            "text": "1m",
+            "value": "1m"
+          },
+          {
+            "selected": false,
+            "text": "10m",
+            "value": "10m"
+          },
+          {
+            "selected": false,
+            "text": "30m",
+            "value": "30m"
+          },
+          {
+            "selected": false,
+            "text": "1h",
+            "value": "1h"
+          },
+          {
+            "selected": false,
+            "text": "6h",
+            "value": "6h"
+          },
+          {
+            "selected": false,
+            "text": "12h",
+            "value": "12h"
+          },
+          {
+            "selected": false,
+            "text": "1d",
+            "value": "1d"
+          },
+          {
+            "selected": false,
+            "text": "7d",
+            "value": "7d"
+          },
+          {
+            "selected": false,
+            "text": "14d",
+            "value": "14d"
+          },
+          {
+            "selected": true,
+            "text": "30d",
+            "value": "30d"
+          }
+        ],
+        "query": "1m,10m,30m,1h,6h,12h,1d,7d,14d,30d",
+        "queryValue": "",
+        "refresh": 2,
+        "skipUrlSync": false,
+        "type": "interval"
+      }
+    ]
+  },
+  "time": {
+    "from": "2022-12-14T00:00:00.000Z",
+    "to": "2023-05-19T00:00:00.000Z"
+  },
+  "timepicker": {
+    "hidden": true
+  },
+  "timezone": "",
+  "title": "Monotch_KPI",
+  "uid": "c0cbfba5-16ea-4d26-930b-1f00fbe6f8d0",
+  "version": 28,
+  "weekStart": ""
+}
