@@ -1,4 +1,59 @@
 {
+  "__inputs": [
+    {
+      "name": "DS_TIMESCALE",
+      "label": "Timescale",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "postgres",
+      "pluginName": "PostgreSQL"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "bargauge",
+      "name": "Bar gauge",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "candlestick",
+      "name": "Candlestick",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "dashlist",
+      "name": "Dashboard list",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "9.5.2"
+    },
+    {
+      "type": "datasource",
+      "id": "postgres",
+      "name": "PostgreSQL",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -18,14 +73,14 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 3,
+  "id": null,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "datasource": {
         "type": "postgres",
-        "uid": "P052245A3190431CB"
+        "uid": "${DS_TIMESCALE}"
       },
       "fieldConfig": {
         "defaults": {
@@ -102,7 +157,7 @@
         {
           "datasource": {
             "type": "postgres",
-            "uid": "P052245A3190431CB"
+            "uid": "${DS_TIMESCALE}"
           },
           "editorMode": "code",
           "format": "table",
@@ -128,13 +183,13 @@
           }
         }
       ],
-      "title": "sum kpi_alert_count based on time bucket",
+      "title": "sum kpi_alert_count based on time bucket($device_identifier1)",
       "type": "timeseries"
     },
     {
       "datasource": {
         "type": "postgres",
-        "uid": "P052245A3190431CB"
+        "uid": "${DS_TIMESCALE}"
       },
       "fieldConfig": {
         "defaults": {
@@ -189,7 +244,7 @@
         {
           "datasource": {
             "type": "postgres",
-            "uid": "P052245A3190431CB"
+            "uid": "${DS_TIMESCALE}"
           },
           "editorMode": "code",
           "format": "table",
@@ -222,7 +277,7 @@
     {
       "datasource": {
         "type": "postgres",
-        "uid": "P052245A3190431CB"
+        "uid": "${DS_TIMESCALE}"
       },
       "description": "",
       "fieldConfig": {
@@ -301,7 +356,7 @@
         {
           "datasource": {
             "type": "postgres",
-            "uid": "P052245A3190431CB"
+            "uid": "${DS_TIMESCALE}"
           },
           "editorMode": "code",
           "format": "time_series",
@@ -350,14 +405,14 @@
           "table": "kpi_1d"
         }
       ],
-      "title": "Avg of  kpi over all filters",
+      "title": "Avg of  kpi over all filters:dev:$device_identifier1, org:$org_identifier1",
       "transparent": true,
       "type": "timeseries"
     },
     {
       "datasource": {
         "type": "postgres",
-        "uid": "P052245A3190431CB"
+        "uid": "${DS_TIMESCALE}"
       },
       "fieldConfig": {
         "defaults": {
@@ -435,7 +490,7 @@
         {
           "datasource": {
             "type": "postgres",
-            "uid": "P052245A3190431CB"
+            "uid": "${DS_TIMESCALE}"
           },
           "editorMode": "code",
           "format": "time_series",
@@ -491,7 +546,7 @@
     {
       "datasource": {
         "type": "postgres",
-        "uid": "P052245A3190431CB"
+        "uid": "${DS_TIMESCALE}"
       },
       "description": "",
       "fieldConfig": {
@@ -547,7 +602,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
+        "h": 8,
         "w": 12,
         "x": 0,
         "y": 16
@@ -573,7 +628,7 @@
         {
           "datasource": {
             "type": "postgres",
-            "uid": "P052245A3190431CB"
+            "uid": "${DS_TIMESCALE}"
           },
           "editorMode": "code",
           "format": "time_series",
@@ -622,14 +677,14 @@
           "table": "kpi_1d"
         }
       ],
-      "title": "Avg of  kpi for each device_identifier",
+      "title": "Avg of  kpi for each device_identifier for dev:$device_identifier1",
       "transparent": true,
       "type": "timeseries"
     },
     {
       "datasource": {
         "type": "postgres",
-        "uid": "P052245A3190431CB"
+        "uid": "${DS_TIMESCALE}"
       },
       "fieldConfig": {
         "defaults": {
@@ -680,7 +735,7 @@
         {
           "datasource": {
             "type": "postgres",
-            "uid": "P052245A3190431CB"
+            "uid": "${DS_TIMESCALE}"
           },
           "editorMode": "code",
           "format": "time_series",
@@ -736,7 +791,7 @@
     {
       "datasource": {
         "type": "postgres",
-        "uid": "P052245A3190431CB"
+        "uid": "${DS_TIMESCALE}"
       },
       "fieldConfig": {
         "defaults": {
@@ -828,7 +883,7 @@
         {
           "datasource": {
             "type": "postgres",
-            "uid": "P052245A3190431CB"
+            "uid": "${DS_TIMESCALE}"
           },
           "editorMode": "code",
           "format": "time_series",
@@ -893,7 +948,7 @@
     {
       "datasource": {
         "type": "postgres",
-        "uid": "P052245A3190431CB"
+        "uid": "${DS_TIMESCALE}"
       },
       "gridPos": {
         "h": 11,
@@ -943,72 +998,10 @@
         "type": "textbox"
       },
       {
-        "current": {
-          "selected": true,
-          "text": [
-            "RA_CAM_QUALITY",
-            "RA_CLOCK_DIFF",
-            "RA_CONNECTED_PERCENTAGE",
-            "RA_EXCEPTIONAL_CONDITION_PERCENTAGE",
-            "RA_MAP_FREQUENCY",
-            "RA_MAP_QUALITY",
-            "RA_PREDICTION_CONFIDENCE_PERCENTAGE",
-            "RA_PREDICTION_LIKELY_DELTA",
-            "RA_PREDICTION_LIKELY_PERCENTAGE",
-            "RA_PREDICTION_WINDOW_PERCENTAGE",
-            "RA_PREDICTION_WINDOW_SIZE",
-            "RA_PRIORITY_ANSWERED_PERCENTAGE",
-            "RA_PRIORITY_GRANTED_ETA_DELTA_EMERGENCY",
-            "RA_PRIORITY_GRANTED_ETA_DELTA_OTHER",
-            "RA_PRIORITY_GRANTED_ETA_GREEN_DELTA_EMERGENCY",
-            "RA_PRIORITY_GRANTED_ETA_GREEN_DELTA_OTHER",
-            "RA_PRIORITY_GRANTED_PERCENTAGE_EMERGENCY",
-            "RA_PRIORITY_GRANTED_PERCENTAGE_OTHER",
-            "RA_ROUNDTRIP_LATENCY",
-            "RA_SAT_MISSING_DAYS",
-            "RA_SESSION_CREATIONS",
-            "RA_SPAT_FREQUENCY",
-            "RA_SPAT_QUALITY",
-            "RA_SRM_QUALITY",
-            "RA_SSM_QUALITY",
-            "RA_STATION_COUNT",
-            "RA_SUBJECT_STATE",
-            "RA_TLCCONF_QUALITY"
-          ],
-          "value": [
-            "RA_CAM_QUALITY",
-            "RA_CLOCK_DIFF",
-            "RA_CONNECTED_PERCENTAGE",
-            "RA_EXCEPTIONAL_CONDITION_PERCENTAGE",
-            "RA_MAP_FREQUENCY",
-            "RA_MAP_QUALITY",
-            "RA_PREDICTION_CONFIDENCE_PERCENTAGE",
-            "RA_PREDICTION_LIKELY_DELTA",
-            "RA_PREDICTION_LIKELY_PERCENTAGE",
-            "RA_PREDICTION_WINDOW_PERCENTAGE",
-            "RA_PREDICTION_WINDOW_SIZE",
-            "RA_PRIORITY_ANSWERED_PERCENTAGE",
-            "RA_PRIORITY_GRANTED_ETA_DELTA_EMERGENCY",
-            "RA_PRIORITY_GRANTED_ETA_DELTA_OTHER",
-            "RA_PRIORITY_GRANTED_ETA_GREEN_DELTA_EMERGENCY",
-            "RA_PRIORITY_GRANTED_ETA_GREEN_DELTA_OTHER",
-            "RA_PRIORITY_GRANTED_PERCENTAGE_EMERGENCY",
-            "RA_PRIORITY_GRANTED_PERCENTAGE_OTHER",
-            "RA_ROUNDTRIP_LATENCY",
-            "RA_SAT_MISSING_DAYS",
-            "RA_SESSION_CREATIONS",
-            "RA_SPAT_FREQUENCY",
-            "RA_SPAT_QUALITY",
-            "RA_SRM_QUALITY",
-            "RA_SSM_QUALITY",
-            "RA_STATION_COUNT",
-            "RA_SUBJECT_STATE",
-            "RA_TLCCONF_QUALITY"
-          ]
-        },
+        "current": {},
         "datasource": {
           "type": "postgres",
-          "uid": "P052245A3190431CB"
+          "uid": "${DS_TIMESCALE}"
         },
         "definition": "select distinct  kpi_type_code\nFROM\n  kpi_1d\norder by \n  kpi_type_code ASC",
         "hide": 0,
@@ -1025,144 +1018,10 @@
         "type": "query"
       },
       {
-        "current": {
-          "selected": true,
-          "text": [
-            "93003",
-            "93027",
-            "93030",
-            "93033",
-            "93045",
-            "93048",
-            "93051",
-            "93054",
-            "93060",
-            "93159",
-            "93225",
-            "93231",
-            "93240",
-            "93261",
-            "93300",
-            "93312",
-            "93372",
-            "93393",
-            "93447",
-            "93453",
-            "93471",
-            "93540",
-            "93561",
-            "93567",
-            "93573",
-            "93585",
-            "93621",
-            "93624",
-            "93684",
-            "93693",
-            "93696",
-            "93753",
-            "93819",
-            "93834",
-            "93846",
-            "93861",
-            "93897",
-            "93951",
-            "93978",
-            "94002",
-            "94008",
-            "94041",
-            "94053",
-            "94107",
-            "94140",
-            "94155",
-            "94164",
-            "94167",
-            "94170",
-            "94176",
-            "94179",
-            "94182",
-            "94185",
-            "94188",
-            "94191",
-            "94194",
-            "94197",
-            "94200",
-            "94215",
-            "94221",
-            "94230",
-            "94236",
-            "94242",
-            "94245"
-          ],
-          "value": [
-            "93003",
-            "93027",
-            "93030",
-            "93033",
-            "93045",
-            "93048",
-            "93051",
-            "93054",
-            "93060",
-            "93159",
-            "93225",
-            "93231",
-            "93240",
-            "93261",
-            "93300",
-            "93312",
-            "93372",
-            "93393",
-            "93447",
-            "93453",
-            "93471",
-            "93540",
-            "93561",
-            "93567",
-            "93573",
-            "93585",
-            "93621",
-            "93624",
-            "93684",
-            "93693",
-            "93696",
-            "93753",
-            "93819",
-            "93834",
-            "93846",
-            "93861",
-            "93897",
-            "93951",
-            "93978",
-            "94002",
-            "94008",
-            "94041",
-            "94053",
-            "94107",
-            "94140",
-            "94155",
-            "94164",
-            "94167",
-            "94170",
-            "94176",
-            "94179",
-            "94182",
-            "94185",
-            "94188",
-            "94191",
-            "94194",
-            "94197",
-            "94200",
-            "94215",
-            "94221",
-            "94230",
-            "94236",
-            "94242",
-            "94245"
-          ]
-        },
+        "current": {},
         "datasource": {
           "type": "postgres",
-          "uid": "P052245A3190431CB"
+          "uid": "${DS_TIMESCALE}"
         },
         "definition": "select distinct  org_identifier\nFROM\n  kpi_1d\norder by \n  org_identifier ASC",
         "hide": 0,
@@ -1179,18 +1038,10 @@
         "type": "query"
       },
       {
-        "current": {
-          "selected": true,
-          "text": [
-            "4063363092"
-          ],
-          "value": [
-            "4063363092"
-          ]
-        },
+        "current": {},
         "datasource": {
           "type": "postgres",
-          "uid": "P052245A3190431CB"
+          "uid": "${DS_TIMESCALE}"
         },
         "definition": "select distinct device_identifier\nFROM\n  kpi_1d\nORDER BY device_identifier ASC",
         "hide": 0,
@@ -1293,6 +1144,6 @@
   "timezone": "",
   "title": "Monotch_KPI",
   "uid": "c0cbfba5-16ea-4d26-930b-1f00fbe6f8d0",
-  "version": 28,
+  "version": 31,
   "weekStart": ""
 }
