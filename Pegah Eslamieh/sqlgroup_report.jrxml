@@ -2,14 +2,14 @@
 <!-- Created with Jaspersoft Studio version 8.2.0.final using JasperReports Library version 6.20.3-415f9428cffdb6805c6f85bbb29ebaf18813a2ab  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sqlgroup_report" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d2d25694-2a0c-493e-9792-15e31fef5e83">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="kpi_group.jrdax"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="407"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="579"/>
 	<parameter name="year" class="java.lang.String"/>
 	<parameter name="month" class="java.lang.String"/>
 	<parameter name="org_identifier" class="java.lang.String">
 		<defaultValueExpression><![CDATA["93003"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="device_identifier" class="java.lang.String">
-		<defaultValueExpression><![CDATA["4115398676"]]></defaultValueExpression>
-	</parameter>
+	<parameter name="device_identifier" class="java.lang.String"/>
 	<queryString language="csv">
 		<![CDATA[]]>
 	</queryString>
@@ -46,10 +46,23 @@
 	<variable name="ratio" class="java.math.BigDecimal" calculation="Average">
 		<variableExpression><![CDATA[$F{alert_ratio}]]></variableExpression>
 	</variable>
-	<filterExpression><![CDATA[($P{org_identifier}.isEmpty() || $F{org_identifier}.equals($P{org_identifier}))
-&& ($F{device_identifier}.matches($P{device_identifier}) || ($P{device_identifier} == null || $P{device_identifier}.isEmpty()))
-&& (($P{year} == null || $F{year_filter}.matches($P{year})) && ($P{month} == null || $F{month_filter}.matches($P{month})))
-&& ($P{org_identifier} == null || $F{org_identifier} == $P{org_identifier} || $P{org_identifier}.isEmpty())]]></filterExpression>
+	<filterExpression><![CDATA[(
+    ($P{org_identifier} == null || $P{org_identifier}.isEmpty()) ||
+    ($F{org_identifier}.matches($P{org_identifier}) || ($F{org_identifier} == $P{org_identifier}))
+)
+&& (
+    ($P{device_identifier} == null || $P{device_identifier}.isEmpty()) ||
+    ($F{device_identifier}.equals($P{device_identifier}) || $F{device_identifier}.matches($P{device_identifier}))
+)
+&& (
+    ($P{year} == null || $P{year}.isEmpty()) ||
+    $F{year_filter}.matches($P{year})
+)
+&& (
+    ($P{month} == null || $P{month}.isEmpty()) ||
+    $F{month_filter}.matches($P{month})
+)
+]]></filterExpression>
 	<background>
 		<band/>
 	</background>
