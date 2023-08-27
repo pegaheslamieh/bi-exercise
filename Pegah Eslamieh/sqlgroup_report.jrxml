@@ -2,17 +2,13 @@
 <!-- Created with Jaspersoft Studio version 8.2.0.final using JasperReports Library version 6.20.3-415f9428cffdb6805c6f85bbb29ebaf18813a2ab  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sqlgroup_report" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d2d25694-2a0c-493e-9792-15e31fef5e83">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="kpi_group.jrdax"/>
-	<parameter name="year" class="java.lang.String">
-		<defaultValueExpression><![CDATA["2022"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="month" class="java.lang.String">
-		<defaultValueExpression><![CDATA["11"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="org_identifier1" class="java.lang.String">
-		<defaultValueExpression><![CDATA["39003"]]></defaultValueExpression>
+	<parameter name="year" class="java.lang.String"/>
+	<parameter name="month" class="java.lang.String"/>
+	<parameter name="org_identifier" class="java.lang.String">
+		<defaultValueExpression><![CDATA["93003"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="device_identifier" class="java.lang.String">
-		<defaultValueExpression><![CDATA["4063363092"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["4115398676"]]></defaultValueExpression>
 	</parameter>
 	<queryString language="csv">
 		<![CDATA[]]>
@@ -28,8 +24,8 @@
 	<field name="total_kpi" class="java.math.BigDecimal"/>
 	<field name="total_kpi_alert" class="java.math.BigDecimal"/>
 	<field name="alert_ratio" class="java.math.BigDecimal"/>
-	<sortField name="device_identifier"/>
 	<sortField name="org_identifier"/>
+	<sortField name="device_identifier"/>
 	<sortField name="year_filter"/>
 	<sortField name="month_filter"/>
 	<variable name="avg2_kpi" class="java.math.BigDecimal" calculation="Average">
@@ -50,15 +46,18 @@
 	<variable name="ratio" class="java.math.BigDecimal" calculation="Average">
 		<variableExpression><![CDATA[$F{alert_ratio}]]></variableExpression>
 	</variable>
-	<filterExpression><![CDATA[$F{device_identifier}.matches( $P{device_identifier} )  && $F{year_filter}.matches( $P{year} ) && $F{month_filter}.matches( $P{month} )]]></filterExpression>
+	<filterExpression><![CDATA[($P{org_identifier}.isEmpty() || $F{org_identifier}.equals($P{org_identifier}))
+&& ($F{device_identifier}.matches($P{device_identifier}) || ($P{device_identifier} == null || $P{device_identifier}.isEmpty()))
+&& (($P{year} == null || $F{year_filter}.matches($P{year})) && ($P{month} == null || $F{month_filter}.matches($P{month})))
+&& ($P{org_identifier} == null || $F{org_identifier} == $P{org_identifier} || $P{org_identifier}.isEmpty())]]></filterExpression>
 	<background>
 		<band/>
 	</background>
 	<title>
-		<band height="41">
+		<band height="40">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 			<frame>
-				<reportElement mode="Opaque" x="0" y="-10" width="554" height="50" backcolor="#006699" uuid="04c8f2e4-6c1c-488a-b16d-13037e62fa80"/>
+				<reportElement mode="Opaque" x="1" y="-3" width="554" height="43" backcolor="#006699" uuid="04c8f2e4-6c1c-488a-b16d-13037e62fa80"/>
 				<staticText>
 					<reportElement x="20" y="4" width="234" height="43" forecolor="#FFFFFF" uuid="7f05ed2c-8f93-4996-add3-6b46fc627059"/>
 					<textElement>
@@ -67,7 +66,7 @@
 					<text><![CDATA[KPI Report]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="365" y="30" width="180" height="20" forecolor="#FFFFFF" uuid="cf1b28a7-435e-47d1-87c3-85545e679f76"/>
+					<reportElement x="360" y="18" width="180" height="20" forecolor="#FFFFFF" uuid="cf1b28a7-435e-47d1-87c3-85545e679f76"/>
 					<textElement textAlignment="Right">
 						<font size="14" isBold="false"/>
 					</textElement>
@@ -137,10 +136,10 @@
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="26">
+		<band height="21">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
 			<staticText>
-				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Opaque" x="0" y="0" width="81" height="26" forecolor="#006699" backcolor="#E6E6E6" uuid="473d848e-e21e-47ba-979a-c252dd22ba30">
+				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Opaque" x="0" y="0" width="81" height="21" forecolor="#006699" backcolor="#E6E6E6" uuid="473d848e-e21e-47ba-979a-c252dd22ba30">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="923a789a-8fac-4c7e-8ca5-927125e3ecf4"/>
 				</reportElement>
 				<box padding="0">
@@ -155,7 +154,7 @@
 				<text><![CDATA[kpi type code]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Opaque" x="81" y="0" width="79" height="26" forecolor="#006699" backcolor="#E6E6E6" uuid="47c06bf2-019f-4804-aed7-4398d80f1d13">
+				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Opaque" x="81" y="0" width="79" height="21" forecolor="#006699" backcolor="#E6E6E6" uuid="47c06bf2-019f-4804-aed7-4398d80f1d13">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="295b97c7-8ba0-448a-af48-85f1498a069f"/>
 				</reportElement>
 				<box padding="0">
@@ -170,7 +169,7 @@
 				<text><![CDATA[avg kpi]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Opaque" x="160" y="0" width="79" height="26" forecolor="#006699" backcolor="#E6E6E6" uuid="1920d2f8-aa0b-4590-a0c3-55b320a9d09c">
+				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Opaque" x="160" y="0" width="79" height="21" forecolor="#006699" backcolor="#E6E6E6" uuid="1920d2f8-aa0b-4590-a0c3-55b320a9d09c">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ee7483d0-59a9-4af0-bcf8-c6f855a015bf"/>
 				</reportElement>
 				<box padding="0">
@@ -185,7 +184,7 @@
 				<text><![CDATA[max kpi]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Opaque" x="239" y="0" width="79" height="26" forecolor="#006699" backcolor="#E6E6E6" uuid="65cc094b-2343-40ae-ad6e-4de0ec469a61">
+				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Opaque" x="239" y="0" width="79" height="21" forecolor="#006699" backcolor="#E6E6E6" uuid="65cc094b-2343-40ae-ad6e-4de0ec469a61">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a0def29d-9c55-4c4c-b5af-2b14e1c9f85d"/>
 				</reportElement>
 				<box padding="0">
@@ -200,7 +199,7 @@
 				<text><![CDATA[min kpi]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Opaque" x="318" y="0" width="79" height="26" forecolor="#006699" backcolor="#E6E6E6" uuid="81ca705c-53a0-44fd-aaa0-ca0850637fb3">
+				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Opaque" x="318" y="0" width="79" height="21" forecolor="#006699" backcolor="#E6E6E6" uuid="81ca705c-53a0-44fd-aaa0-ca0850637fb3">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cd541247-59f0-48db-aab3-c1db45b57aae"/>
 				</reportElement>
 				<box padding="0">
@@ -215,7 +214,7 @@
 				<text><![CDATA[total kpi]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Opaque" x="397" y="0" width="79" height="26" forecolor="#006699" backcolor="#E6E6E6" uuid="106bb6d3-4284-482a-bac3-a8bb24606ebb">
+				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Opaque" x="397" y="0" width="79" height="21" forecolor="#006699" backcolor="#E6E6E6" uuid="106bb6d3-4284-482a-bac3-a8bb24606ebb">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="eb70427c-3aa0-4e00-bbb8-f24ab6073c67"/>
 				</reportElement>
 				<box padding="0">
@@ -230,7 +229,7 @@
 				<text><![CDATA[total alert]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Opaque" x="476" y="0" width="79" height="26" forecolor="#006699" backcolor="#E6E6E6" uuid="52f0b526-cfa9-4e58-bb7b-78d8211d2c23">
+				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Opaque" x="476" y="0" width="79" height="21" forecolor="#006699" backcolor="#E6E6E6" uuid="52f0b526-cfa9-4e58-bb7b-78d8211d2c23">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="846308ec-0092-47d0-a75d-ca6817684f28"/>
 				</reportElement>
 				<box padding="0">
@@ -247,10 +246,10 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="28">
+		<band height="22">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
 			<textField textAdjust="ScaleFont">
-				<reportElement positionType="Float" stretchType="ContainerHeight" x="0" y="0" width="81" height="28" uuid="348ac8cc-cf90-4bd2-8fc1-5d2d2b38f067">
+				<reportElement positionType="Float" stretchType="ContainerHeight" x="0" y="0" width="81" height="22" uuid="348ac8cc-cf90-4bd2-8fc1-5d2d2b38f067">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="923a789a-8fac-4c7e-8ca5-927125e3ecf4"/>
 				</reportElement>
 				<box padding="0">
@@ -265,7 +264,7 @@
 				<textFieldExpression><![CDATA[$F{kpi_type_code}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement positionType="Float" stretchType="ContainerHeight" x="81" y="0" width="79" height="28" uuid="ab6d715a-bf55-45fc-88f9-6f2775f41dd4">
+				<reportElement positionType="Float" stretchType="ContainerHeight" x="81" y="0" width="79" height="22" uuid="ab6d715a-bf55-45fc-88f9-6f2775f41dd4">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="295b97c7-8ba0-448a-af48-85f1498a069f"/>
 				</reportElement>
 				<box padding="0">
@@ -280,7 +279,7 @@
 				<textFieldExpression><![CDATA[$F{avg_kpi}.setScale(0, java.math.RoundingMode.DOWN)]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement positionType="Float" stretchType="ContainerHeight" x="160" y="0" width="79" height="28" uuid="17d38ffd-8223-4087-874c-e203c3364b47">
+				<reportElement positionType="Float" stretchType="ContainerHeight" x="160" y="0" width="79" height="22" uuid="17d38ffd-8223-4087-874c-e203c3364b47">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ee7483d0-59a9-4af0-bcf8-c6f855a015bf"/>
 				</reportElement>
 				<box padding="0">
@@ -295,7 +294,7 @@
 				<textFieldExpression><![CDATA[$F{max_kpi}.setScale(0, java.math.RoundingMode.DOWN)]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement positionType="Float" stretchType="ContainerHeight" x="239" y="0" width="79" height="28" uuid="f6b527bb-7078-496b-a158-c418b64beb88">
+				<reportElement positionType="Float" stretchType="ContainerHeight" x="239" y="0" width="79" height="22" uuid="f6b527bb-7078-496b-a158-c418b64beb88">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a0def29d-9c55-4c4c-b5af-2b14e1c9f85d"/>
 				</reportElement>
 				<box padding="0">
@@ -310,7 +309,7 @@
 				<textFieldExpression><![CDATA[$F{min_kpi}.setScale(0, java.math.RoundingMode.DOWN)]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement positionType="Float" stretchType="ContainerHeight" x="318" y="0" width="79" height="28" uuid="3d8f525e-265e-4472-8148-2c65c6f27513">
+				<reportElement positionType="Float" stretchType="ContainerHeight" x="318" y="0" width="79" height="22" uuid="3d8f525e-265e-4472-8148-2c65c6f27513">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cd541247-59f0-48db-aab3-c1db45b57aae"/>
 				</reportElement>
 				<box padding="0">
@@ -325,7 +324,7 @@
 				<textFieldExpression><![CDATA[$F{total_kpi}.setScale(0, java.math.RoundingMode.DOWN)]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement positionType="Float" stretchType="ContainerHeight" x="397" y="0" width="79" height="28" uuid="dfc89c2e-0e0e-48f6-82e4-012fb809e417">
+				<reportElement positionType="Float" stretchType="ContainerHeight" x="397" y="0" width="79" height="22" uuid="dfc89c2e-0e0e-48f6-82e4-012fb809e417">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="eb70427c-3aa0-4e00-bbb8-f24ab6073c67"/>
 				</reportElement>
 				<box padding="0">
@@ -340,7 +339,7 @@
 				<textFieldExpression><![CDATA[$F{total_kpi_alert}.setScale(0, java.math.RoundingMode.DOWN)]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement positionType="Float" stretchType="ContainerHeight" x="476" y="0" width="79" height="28" uuid="52bfa453-4cd7-4fce-9044-8dabb51fb2f2">
+				<reportElement positionType="Float" stretchType="ContainerHeight" x="476" y="0" width="79" height="22" uuid="52bfa453-4cd7-4fce-9044-8dabb51fb2f2">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="846308ec-0092-47d0-a75d-ca6817684f28"/>
 				</reportElement>
 				<box padding="0">
