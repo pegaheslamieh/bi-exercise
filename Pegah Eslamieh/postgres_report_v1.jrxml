@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 8.2.0.final using JasperReports Library version 6.20.3-415f9428cffdb6805c6f85bbb29ebaf18813a2ab  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sqlgroup_report" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" uuid="d2d25694-2a0c-493e-9792-15e31fef5e83">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="postgres1.jrdax"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="407"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="579"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="year" class="java.lang.String"/>
+	<parameter name="month" class="java.lang.String"/>
+	<parameter name="org_identifier" class="java.lang.String">
+		<defaultValueExpression><![CDATA["93003"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="device_identifier" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT "device_identifier", "org_identifier", EXTRACT(YEAR FROM "time") AS year_filter, EXTRACT(MONTH FROM "time") AS month_filter, "kpi_type_code",
+       AVG("kpi_value_avg") AS avg_kpi, MAX("kpi_value_max") AS max_kpi, MIN("kpi_value_min") AS min_kpi,
+       SUM("kpi_count") AS total_kpi, SUM("kpi_alert_count") AS total_kpi_alert,
+       CAST(ROUND(CAST(SUM("kpi_alert_count") AS DECIMAL) / NULLIF(CAST(SUM("kpi_count") AS DECIMAL), 0), 5) AS DECIMAL(10, 5)) AS alert_ratio
+FROM "kpi_1d"
+GROUP BY "device_identifier", "org_identifier", "kpi_type_code", EXTRACT(YEAR FROM "time"), EXTRACT(MONTH FROM "time")
+ORDER BY "device_identifier", "org_identifier", EXTRACT(YEAR FROM "time"), EXTRACT(MONTH FROM "time")]]>
+	</queryString>
+	<field name="device_identifier" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="device_identifier"/>
+		<property name="com.jaspersoft.studio.field.label" value="device_identifier"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kpi_1d"/>
+	</field>
+	<field name="org_identifier" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="org_identifier"/>
+		<property name="com.jaspersoft.studio.field.label" value="org_identifier"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kpi_1d"/>
+	</field>
+	<field name="year_filter" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="year_filter"/>
+		<property name="com.jaspersoft.studio.field.label" value="year_filter"/>
+	</field>
+	<field name="month_filter" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="month_filter"/>
+		<property name="com.jaspersoft.studio.field.label" value="month_filter"/>
+	</field>
+	<field name="kpi_type_code" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="kpi_type_code"/>
+		<property name="com.jaspersoft.studio.field.label" value="kpi_type_code"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kpi_1d"/>
+	</field>
+	<field name="avg_kpi" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="avg_kpi"/>
+		<property name="com.jaspersoft.studio.field.label" value="avg_kpi"/>
+	</field>
+	<field name="max_kpi" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="max_kpi"/>
+		<property name="com.jaspersoft.studio.field.label" value="max_kpi"/>
+	</field>
+	<field name="min_kpi" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="min_kpi"/>
+		<property name="com.jaspersoft.studio.field.label" value="min_kpi"/>
+	</field>
+	<field name="total_kpi" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="total_kpi"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_kpi"/>
+	</field>
+	<field name="total_kpi_alert" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="total_kpi_alert"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_kpi_alert"/>
+	</field>
+	<field name="alert_ratio" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="alert_ratio"/>
+		<property name="com.jaspersoft.studio.field.label" value="alert_ratio"/>
+	</field>
+	<sortField name="org_identifier"/>
+	<sortField name="device_identifier"/>
+	<sortField name="year_filter"/>
+	<sortField name="month_filter"/>
+	<variable name="avg2_kpi" class="java.math.BigDecimal" resetType="Group" resetGroup="Group1" calculation="Average">
+		<variableExpression><![CDATA[$F{avg_kpi}]]></variableExpression>
+	</variable>
+	<variable name="max" class="java.math.BigDecimal" resetType="Group" resetGroup="Group1" calculation="Highest">
+		<variableExpression><![CDATA[$F{max_kpi}]]></variableExpression>
+	</variable>
+	<variable name="min" class="java.math.BigDecimal" resetType="Group" resetGroup="Group1" calculation="Lowest">
+		<variableExpression><![CDATA[$F{min_kpi}]]></variableExpression>
+	</variable>
+	<variable name="total" class="java.math.BigDecimal" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_kpi}]]></variableExpression>
+	</variable>
+	<variable name="totalalert" class="java.math.BigDecimal" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_kpi_alert}]]></variableExpression>
+	</variable>
+	<variable name="ratio" class="java.math.BigDecimal" resetType="Group" resetGroup="Group1" calculation="Average">
+		<variableExpression><![CDATA[$F{alert_ratio}]]></variableExpression>
+	</variable>
+	<filterExpression><![CDATA[(
+    ($P{org_identifier} == null || $P{org_identifier}.isEmpty()) ||
+    ($F{org_identifier}.matches($P{org_identifier}) || ($F{org_identifier} == $P{org_identifier}))
+)
+&& (
+    ($P{device_identifier} == null || $P{device_identifier}.isEmpty()) ||
+    ($F{device_identifier}.equals($P{device_identifier}) || $F{device_identifier}.matches($P{device_identifier}))
+)
+&& (
+    ($P{year} == null || $P{year}.isEmpty()) ||
+    $F{year_filter}.matches($P{year})
+)
+&& (
+    ($P{month} == null || $P{month}.isEmpty()) ||
+    $F{month_filter}.matches($P{month})
+)]]></filterExpression>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{device_identifier}]]></groupExpression>
+		<groupHeader>
+			<band height="25">
+				<staticText>
+					<reportElement x="0" y="0" width="81" height="20" uuid="e6e45419-369f-4eb8-b91e-87d45ff521d8"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Aggrigate on Device:]]></text>
+				</staticText>
+				<textField evaluationTime="Group" evaluationGroup="Group1">
+					<reportElement x="81" y="0" width="79" height="20" uuid="5ba22eeb-dded-4b43-a6f6-3780b0976902"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{max}.setScale(0, java.math.RoundingMode.DOWN)]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="Group1">
+					<reportElement x="160" y="0" width="79" height="20" uuid="8732f2e1-82f0-4700-8ad0-e3aa9aec1f70"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{min}.setScale(0, java.math.RoundingMode.DOWN)]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="Group1">
+					<reportElement x="239" y="0" width="79" height="20" uuid="1531c6c8-13fd-4fc5-a849-dfa6aa496617"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{total}.setScale(0, java.math.RoundingMode.DOWN)]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="Group1">
+					<reportElement x="318" y="0" width="79" height="20" uuid="b8087edf-35d5-46f9-814a-393b5b3329e9"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalalert}.setScale(0, java.math.RoundingMode.DOWN)]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="Group1">
+					<reportElement x="397" y="0" width="79" height="20" uuid="2d21ba0b-3c67-4029-ac20-877cee05713a"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{ratio}.setScale(5, java.math.RoundingMode.DOWN)]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="Group1">
+					<reportElement x="476" y="0" width="79" height="20" uuid="3693da76-a8f9-4498-ad30-4cd8628cabc5"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{avg2_kpi}.setScale(0, java.math.RoundingMode.DOWN)]]></textFieldExpression>
+				</textField>
+				<break>
+					<reportElement x="0" y="-1" width="100" height="1" isPrintWhenDetailOverflows="true" printWhenGroupChanges="Group1" uuid="f35fb7e1-8283-4a6d-94ca-5a73d99316d3"/>
+				</break>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="Group2">
+		<groupExpression><![CDATA[$F{month_filter}]]></groupExpression>
+		<groupFooter>
+			<band height="24">
+				<break>
+					<reportElement x="0" y="8" width="100" height="1" uuid="b33e1ee0-b5d7-4de7-b832-f05e57fc84bc"/>
+				</break>
+				<staticText>
+					<reportElement x="0" y="0" width="81" height="20" uuid="22427b49-ae4c-40d5-811c-40a77cf66189"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Aggrigate on Month:]]></text>
+				</staticText>
+				<textField evaluationTime="Group" evaluationGroup="Group2">
+					<reportElement x="81" y="0" width="79" height="20" uuid="f98fbdc9-f9b9-4556-8fed-f3249f51e9ab"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{max}.setScale(0, java.math.RoundingMode.DOWN)]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="Group2">
+					<reportElement x="160" y="0" width="79" height="20" uuid="0a157fa7-e550-484d-93ae-e0946365bab7"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{min}.setScale(0, java.math.RoundingMode.DOWN)]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="Group2">
+					<reportElement x="239" y="0" width="79" height="20" uuid="b9e88949-d770-46c4-b76c-ae04e3128acc"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{total}.setScale(0, java.math.RoundingMode.DOWN)]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="Group2">
+					<reportElement x="318" y="0" width="79" height="20" uuid="7b5220bc-d47b-411b-b9df-e852f0e3542b"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalalert}.setScale(0, java.math.RoundingMode.DOWN)]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="Group2">
+					<reportElement x="397" y="0" width="79" height="20" uuid="79e2e646-3143-49a3-a981-27bdb4df2f37"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{ratio}.setScale(5, java.math.RoundingMode.DOWN)]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="Group2">
+					<reportElement x="476" y="0" width="79" height="20" uuid="11e3eaee-725a-4080-8662-3121fe35f54a"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{avg2_kpi}.setScale(0, java.math.RoundingMode.DOWN)]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="40">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+			<frame>
+				<reportElement mode="Opaque" x="1" y="-3" width="554" height="43" backcolor="#006699" uuid="04c8f2e4-6c1c-488a-b16d-13037e62fa80"/>
+				<staticText>
+					<reportElement x="20" y="4" width="234" height="43" forecolor="#FFFFFF" uuid="7f05ed2c-8f93-4996-add3-6b46fc627059"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[KPI Report]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="360" y="18" width="180" height="20" forecolor="#FFFFFF" uuid="cf1b28a7-435e-47d1-87c3-85545e679f76"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[group by device]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="40">
+			<textField>
+				<reportElement x="110" y="0" width="100" height="20" uuid="79a488cd-60d6-4c37-8c0f-7e13a557bfe7"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{device_identifier}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="20" width="100" height="20" uuid="bb080270-6323-48b4-b219-6859e30ff088"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{org_identifier}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="470" y="0" width="85" height="20" uuid="f657028e-e71b-421a-a50f-f1b8fb7bd7ad"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{year_filter}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="470" y="20" width="85" height="20" uuid="b1d581c0-e4b7-4fea-993c-63325a75c684"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{month_filter}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="110" height="20" uuid="636c448c-4774-424d-8eee-2eb9fb529375"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Device_identifier:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="110" height="20" uuid="3a2d721c-bf04-4d95-b34a-724416a9db7a"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Org_identifier:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="1" width="80" height="19" uuid="5c9754ab-f149-4894-8791-4e8fff1b08cd"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Year:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="20" width="80" height="19" uuid="0d89d745-9d59-40d5-b255-18e4d2b2af60"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Month:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="25">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+			<staticText>
+				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Opaque" x="0" y="0" width="81" height="25" forecolor="#006699" backcolor="#E6E6E6" uuid="473d848e-e21e-47ba-979a-c252dd22ba30">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="923a789a-8fac-4c7e-8ca5-927125e3ecf4"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[kpi type code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Opaque" x="81" y="0" width="79" height="25" forecolor="#006699" backcolor="#E6E6E6" uuid="47c06bf2-019f-4804-aed7-4398d80f1d13">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="295b97c7-8ba0-448a-af48-85f1498a069f"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[avg kpi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Opaque" x="160" y="0" width="79" height="25" forecolor="#006699" backcolor="#E6E6E6" uuid="1920d2f8-aa0b-4590-a0c3-55b320a9d09c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ee7483d0-59a9-4af0-bcf8-c6f855a015bf"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[max kpi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Opaque" x="239" y="0" width="79" height="25" forecolor="#006699" backcolor="#E6E6E6" uuid="65cc094b-2343-40ae-ad6e-4de0ec469a61">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a0def29d-9c55-4c4c-b5af-2b14e1c9f85d"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[min kpi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Opaque" x="318" y="0" width="79" height="25" forecolor="#006699" backcolor="#E6E6E6" uuid="81ca705c-53a0-44fd-aaa0-ca0850637fb3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cd541247-59f0-48db-aab3-c1db45b57aae"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[total kpi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Opaque" x="397" y="0" width="79" height="25" forecolor="#006699" backcolor="#E6E6E6" uuid="106bb6d3-4284-482a-bac3-a8bb24606ebb">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="eb70427c-3aa0-4e00-bbb8-f24ab6073c67"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[total alert]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Opaque" x="476" y="0" width="79" height="25" forecolor="#006699" backcolor="#E6E6E6" uuid="52f0b526-cfa9-4e58-bb7b-78d8211d2c23">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="846308ec-0092-47d0-a75d-ca6817684f28"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[alert ratio]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+			<textField textAdjust="ScaleFont">
+				<reportElement positionType="Float" stretchType="ContainerHeight" x="0" y="0" width="81" height="17" uuid="348ac8cc-cf90-4bd2-8fc1-5d2d2b38f067">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="923a789a-8fac-4c7e-8ca5-927125e3ecf4"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{kpi_type_code}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="Float" stretchType="ContainerHeight" x="81" y="0" width="79" height="17" uuid="ab6d715a-bf55-45fc-88f9-6f2775f41dd4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="295b97c7-8ba0-448a-af48-85f1498a069f"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{avg_kpi}.setScale(0, java.math.RoundingMode.DOWN)]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="Float" stretchType="ContainerHeight" x="160" y="0" width="79" height="17" uuid="17d38ffd-8223-4087-874c-e203c3364b47">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ee7483d0-59a9-4af0-bcf8-c6f855a015bf"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{max_kpi}.setScale(0, java.math.RoundingMode.DOWN)]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="Float" stretchType="ContainerHeight" x="239" y="0" width="79" height="17" uuid="f6b527bb-7078-496b-a158-c418b64beb88">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a0def29d-9c55-4c4c-b5af-2b14e1c9f85d"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{min_kpi}.setScale(0, java.math.RoundingMode.DOWN)]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="Float" stretchType="ContainerHeight" x="318" y="0" width="79" height="17" uuid="3d8f525e-265e-4472-8148-2c65c6f27513">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cd541247-59f0-48db-aab3-c1db45b57aae"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_kpi}.setScale(0, java.math.RoundingMode.DOWN)]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="Float" stretchType="ContainerHeight" x="397" y="0" width="79" height="17" uuid="dfc89c2e-0e0e-48f6-82e4-012fb809e417">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="eb70427c-3aa0-4e00-bbb8-f24ab6073c67"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_kpi_alert}.setScale(0, java.math.RoundingMode.DOWN)]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="Float" stretchType="ContainerHeight" x="476" y="0" width="79" height="17" uuid="52bfa453-4cd7-4fce-9044-8dabb51fb2f2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="846308ec-0092-47d0-a75d-ca6817684f28"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{alert_ratio}.setScale(5, java.math.RoundingMode.DOWN)]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="21">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="0" width="515" height="20" backcolor="#E6E6E6" uuid="a04571f2-d71e-4157-a935-4719b525775c"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="223" height="13" uuid="53ba33df-4d01-49c2-bc63-df613160c90a"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="0" width="40" height="20" backcolor="#E6E6E6" uuid="6428808a-ebde-44e4-95fa-e38564c1c2e6"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
